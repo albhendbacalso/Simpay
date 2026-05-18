@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Transaction History | SimPay</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {},
+            borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+            fontFamily: { headline: ["Public Sans"], body: ["Public Sans"], label: ["Public Sans"] }
+          }
+        }
+      };
+    </script>
+
+    <style>
+      body { font-family: "Public Sans", sans-serif; }
+      .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+    </style>
+  </head>
+
+  <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+    <aside class="fixed left-0 top-0 h-full flex flex-col p-4 z-40 bg-slate-50 dark:bg-slate-950 h-screen w-64 border-r border-slate-200 dark:border-slate-800 transition-all duration-200 ease-in-out">
+      <div class="mb-8 px-4">
+        <span class="text-2xl font-black tracking-tight text-blue-600">SimPay</span>
+      </div>
+
+      <nav class="flex-1 space-y-1">
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all rounded-lg" href="/dashboard.html">
+          <span class="material-symbols-outlined">home</span>
+          <span class="text-sm font-medium">Home</span>
+        </a>
+
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all rounded-lg" href="/items.html">
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span class="text-sm font-medium">Items</span>
+        </a>
+
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all rounded-lg" href="/checkout.html">
+          <span class="material-symbols-outlined">shopping_cart</span>
+          <span class="text-sm font-medium">Checkout</span>
+        </a>
+
+        <a class="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg">
+          <span class="material-symbols-outlined">history</span>
+          <span class="text-sm font-medium">History</span>
+        </a>
+
+        <a id="logoutBtn" class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all rounded-lg mt-auto" href="#">
+          <span class="material-symbols-outlined">logout</span>
+          <span class="text-sm font-medium">Logout</span>
+        </a>
+      </nav>
+
+      <div class="mt-auto pt-4 border-t border-slate-200 dark:border-slate-800">
+        <div class="flex items-center gap-3 px-2">
+          <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center">
+            <span class="material-symbols-outlined text-slate-700">person</span>
+          </div>
+          <div class="overflow-hidden">
+            <p class="text-sm font-bold truncate">SimPay User</p>
+            <p class="text-xs text-slate-500 truncate">Logged in</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="ml-64 min-h-screen">
+      <header class="flex justify-between items-center px-6 py-3 w-full bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm sticky top-0 z-30">
+        <div class="flex items-center gap-4">
+          <h1 class="text-xl font-bold text-blue-600 dark:text-blue-400">Transaction History</h1>
+        </div>
+        <div class="flex items-center gap-6">
+          <div class="relative group">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+            <input id="searchBox" class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-sm w-64 focus:ring-2 focus:ring-blue-500 transition-all" placeholder="Search..." type="text" />
+          </div>
+        </div>
+      </header>
+
+      <div class="p-8 max-w-7xl mx-auto">
+        <div class="mb-6 flex items-end justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">Transaction List</h2>
+            <p class="text-slate-500 mt-1">Your transactions are displayed in chronological order.</p>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 uppercase text-[10px] font-bold tracking-widest border-b border-slate-200 dark:border-slate-800">
+                  <th class="px-6 py-4">Date/Time</th>
+                  <th class="px-6 py-4">Transaction</th>
+                  <th class="px-6 py-4">Type / Reference</th>
+                  <th class="px-6 py-4">Status</th>
+                  <th class="px-6 py-4 text-right">Amount</th>
+                  <th class="px-6 py-4 text-right">Receipt</th>
+                </tr>
+              </thead>
+
+              <tbody id="historyBody" class="divide-y divide-slate-100 dark:divide-slate-800">
+                <!-- filled by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div id="historyFooter" class="px-6 py-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <p id="countText" class="text-xs text-slate-500">Loading…</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/history.js"></script>
+  </body>
+</html>

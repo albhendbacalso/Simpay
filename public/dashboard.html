@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SimPay | Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {},
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px"
+            },
+            fontFamily: {
+              headline: ["Public Sans"],
+              body: ["Public Sans"],
+              label: ["Public Sans"]
+            }
+          }
+        }
+      };
+    </script>
+    <style>
+      body { font-family: "Public Sans", sans-serif; }
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        display: inline-block;
+        line-height: 1;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+      }
+    </style>
+  </head>
+
+  <body class="bg-slate-50 text-slate-900 antialiased">
+    <aside class="fixed left-0 top-0 h-full flex flex-col p-4 z-40 h-screen w-64 border-r border-slate-200 bg-slate-50 transition-all duration-200 ease-in-out hidden md:flex">
+      <div class="mb-8 px-4">
+        <h1 class="text-2xl font-black tracking-tight text-blue-600">SimPay</h1>
+      </div>
+
+      <nav class="flex-1 space-y-1">
+        <a class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg text-sm font-medium" href="/dashboard.html">
+          <span class="material-symbols-outlined" data-icon="home">home</span>
+          Home
+        </a>
+
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-200 transition-all text-sm font-medium" href="/items.html">
+          <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+          Items
+        </a>
+
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-200 transition-all text-sm font-medium" href="/checkout.html">
+          <span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+          Checkout
+        </a>
+
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-200 transition-all text-sm font-medium" href="/history.html">
+          <span class="material-symbols-outlined" data-icon="history">history</span>
+          History
+        </a>
+
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-200 transition-all text-sm font-medium" href="/profile.html">
+          <span class="material-symbols-outlined" data-icon="person">person</span>
+          Profile
+        </a>
+      </nav>
+
+      <div class="mt-auto border-t border-slate-200 pt-6">
+        <div class="flex items-center gap-3 px-2 mb-6">
+          <div class="h-10 w-10 rounded-full bg-slate-200 overflow-hidden">
+            <img alt="User" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-bJ-WU3PY0ZcOtBwh0tJ7jTmqjLY0GIA98qhp4drNt_FQk_dryBOFokpKkS1Tu16NQ4rD-Ao1-VD_lfqLKn71USeQZxGUdd90HFUvvvZudjUzsYB9XuvMCt7z5azZHE221_vKRx27kUm3_ZFR5MuF_o_HEVRcO7Kxf8dp2BPazb9eeHKFgsw6qbtWdMPvEjhpE-nLlz2yC4r9-iIP2Tn6nuvuWDq2011HrwrlTDytdxavQb6PE_yfdKLqfsenbaN_H-zOUwIjWRNm" />
+          </div>
+          <div>
+            <p class="text-sm font-bold text-slate-900">SimPay User</p>
+            <p class="text-xs text-slate-500">Logged in</p>
+          </div>
+        </div>
+
+        <a id="logoutBtn" class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-200 transition-all text-sm font-medium" href="#">
+          <span class="material-symbols-outlined" data-icon="logout">logout</span>
+          Logout
+        </a>
+      </div>
+    </aside>
+
+    <header class="flex justify-between items-center px-6 py-3 w-full bg-white border-b border-slate-200 shadow-sm fixed top-0 z-30 md:pl-72">
+      <div class="flex items-center gap-4">
+        <span class="md:hidden text-xl font-bold text-blue-600">SimPay</span>
+        <div class="relative hidden sm:block">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg" data-icon="search">search</span>
+          <input class="pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm w-64 focus:ring-2 focus:ring-blue-600" placeholder="Search transactions..." type="text" />
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button class="p-2 text-slate-600 hover:bg-slate-50 rounded-full transition-colors relative">
+          <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="pt-20 pb-24 md:pb-8 md:pl-72 min-h-screen">
+      <div class="max-w-7xl mx-auto px-6 space-y-8">
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 relative overflow-hidden rounded-3xl bg-blue-700 p-8 text-white shadow-xl">
+            <div class="absolute top-0 right-0 p-8 opacity-10">
+              <span class="material-symbols-outlined text-9xl" data-icon="shield_with_heart">shield_with_heart</span>
+            </div>
+            <div class="relative z-10">
+              <p class="text-blue-100 font-medium mb-1">Available Balance</p>
+              <h2 id="balanceAmount" class="text-5xl font-black mb-8 tracking-tight">₱ 0.00</h2>
+              <div class="flex flex-wrap gap-4">
+                <button id="cashInBtn" class="bg-white/20 hover:bg-white/30 backdrop-blur-md px-6 py-3 rounded-xl flex items-center gap-2 font-bold transition-all">
+                  <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+                  Cash In
+                </button>
+                <button id="sendMoneyBtn" class="bg-white text-blue-700 px-6 py-3 rounded-xl flex items-center gap-2 font-bold transition-all shadow-lg">
+                  <span class="material-symbols-outlined" data-icon="send">send</span>
+                  Send Money
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start mb-6">
+                <h3 class="text-lg font-bold text-slate-800">System Status</h3>
+                <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">ONLINE</span>
+              </div>
+              <p class="text-slate-600 text-sm">
+                SimPay is running locally. Transactions, receipts, and history are stored internally.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- The rest of your dashboard UI can remain as-is -->
+      </div>
+    </main>
+
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-6 py-3 flex justify-between items-center z-50">
+      <a id="mNavHome" class="flex flex-col items-center gap-1 text-blue-600" href="/dashboard.html">
+        <span class="material-symbols-outlined" data-icon="home">home</span>
+        <span class="text-[10px] font-bold">Home</span>
+      </a>
+
+      <a id="mNavItems" class="flex flex-col items-center gap-1 text-slate-400" href="/items.html">
+        <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+        <span class="text-[10px] font-bold">Items</span>
+      </a>
+
+      <div class="-mt-12 bg-blue-600 text-white h-14 w-14 rounded-full flex items-center justify-center shadow-lg border-4 border-white">
+        <span class="material-symbols-outlined text-3xl" data-icon="qr_code_scanner">qr_code_scanner</span>
+      </div>
+
+      <a id="mNavHistory" class="flex flex-col items-center gap-1 text-slate-400" href="/history.html">
+        <span class="material-symbols-outlined" data-icon="history">history</span>
+        <span class="text-[10px] font-bold">History</span>
+      </a>
+
+      <a id="mNavProfile" class="flex flex-col items-center gap-1 text-slate-400" href="/profile.html">
+        <span class="material-symbols-outlined" data-icon="person">person</span>
+        <span class="text-[10px] font-bold">Profile</span>
+      </a>
+    </nav>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Checkout - SimPay</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {},
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            fontFamily: {
+              headline: ["Public Sans"],
+              body: ["Public Sans"],
+              label: ["Public Sans"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        font-family: "Public Sans", sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+    </style>
+  </head>
+
+  <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+    <!-- SideNavBar -->
+    <aside
+      class="fixed left-0 top-0 h-full flex flex-col p-4 z-40 bg-slate-50 dark:bg-slate-950 h-screen w-64 border-r border-slate-200 dark:border-slate-800 hidden md:flex"
+    >
+      <div class="mb-8 px-4">
+        <span class="text-2xl font-black tracking-tight text-blue-600">SimPay</span>
+      </div>
+
+      <nav class="flex-1 space-y-1">
+        <a
+          class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all duration-200 ease-in-out rounded-lg"
+          href="/dashboard.html"
+        >
+          <span class="material-symbols-outlined">home</span>
+          <span class="text-sm font-medium">Home</span>
+        </a>
+
+        <a
+          class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all duration-200 ease-in-out rounded-lg"
+          href="/items.html"
+        >
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span class="text-sm font-medium">Items</span>
+        </a>
+
+        <!-- Active: Checkout -->
+        <a
+          class="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg duration-200 ease-in-out"
+          href="/checkout.html"
+        >
+          <span class="material-symbols-outlined">shopping_cart</span>
+          <span class="text-sm font-medium">Checkout</span>
+        </a>
+
+        <a
+          class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all duration-200 ease-in-out rounded-lg"
+          href="/history.html"
+        >
+          <span class="material-symbols-outlined">history</span>
+          <span class="text-sm font-medium">History</span>
+        </a>
+      </nav>
+
+      <div class="mt-auto pt-6 border-t border-slate-200 dark:border-slate-800">
+        <a
+          class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all duration-200 ease-in-out rounded-lg"
+          href="/login.html"
+          onclick="localStorage.removeItem('simpay_token'); localStorage.removeItem('cart');"
+        >
+          <span class="material-symbols-outlined">logout</span>
+          <span class="text-sm font-medium">Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 min-h-screen">
+      <!-- TopNavBar -->
+      <header
+        class="flex justify-between items-center px-6 py-3 w-full bg-white dark:bg-slate-900 text-sans antialiased docked full-width top-0 border-b border-slate-200 dark:border-slate-800 shadow-sm sticky z-30"
+      >
+        <div class="flex items-center gap-4">
+          <span class="md:hidden material-symbols-outlined text-slate-600">menu</span>
+          <h1 class="text-xl font-bold text-blue-600 dark:text-blue-400">SimPay</h1>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="relative hidden sm:block">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"
+              >search</span
+            >
+            <input
+              class="pl-10 pr-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border-none text-sm focus:ring-2 focus:ring-blue-500 w-64"
+              placeholder="Search..."
+              type="text"
+              disabled
+            />
+          </div>
+          <span
+            class="material-symbols-outlined text-slate-600 dark:text-slate-400 p-2 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-colors"
+            >notifications</span
+          >
+        </div>
+      </header>
+
+      <!-- Checkout Layout -->
+      <div class="p-6 md:p-10 max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row gap-8">
+          <!-- Left -->
+          <div class="flex-grow space-y-6">
+            <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+              <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+                <h2 class="font-bold text-lg">Billing Summary</h2>
+                <span id="itemCountBadge" class="text-xs font-semibold bg-blue-100 text-blue-700 px-2 py-1 rounded">0 ITEMS</span>
+              </div>
+
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                  <thead class="bg-slate-50 dark:bg-slate-800/50">
+                    <tr>
+                      <th class="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">Item / Service</th>
+                      <th class="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">Billing Period</th>
+                      <th class="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Amount (₱)</th>
+                    </tr>
+                  </thead>
+
+                  <!-- Dynamic rows -->
+                  <tbody id="checkoutTableBody" class="divide-y divide-slate-100 dark:divide-slate-800"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+              <h2 class="font-bold text-lg mb-4">Payment Method</h2>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- SimPay Wallet (selected) -->
+                <div class="relative border-2 border-blue-500 bg-blue-50/50 dark:bg-blue-900/20 rounded-xl p-4 cursor-pointer">
+                  <div class="absolute top-3 right-3 text-blue-600">
+                    <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">check_circle</span>
+                  </div>
+                  <div class="flex flex-col gap-3">
+                    <span class="material-symbols-outlined text-blue-600" style="font-variation-settings:'FILL' 1;">account_balance_wallet</span>
+                    <div>
+                      <div class="text-sm font-bold">SimPay Wallet</div>
+                      <div class="text-xs text-slate-500">Balance: <span id="walletBalance">₱ 0.00</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- (Disabled options for prototype consistency; SRS says internal payments) -->
+                <div class="border border-slate-200 dark:border-slate-800 rounded-xl p-4 opacity-50 cursor-not-allowed">
+                  <div class="flex flex-col gap-3">
+                    <span class="material-symbols-outlined text-slate-400">payments</span>
+                    <div>
+                      <div class="text-sm font-bold">External Method</div>
+                      <div class="text-xs text-slate-500">Not available (internal only)</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="border border-slate-200 dark:border-slate-800 rounded-xl p-4 opacity-50 cursor-not-allowed">
+                  <div class="flex flex-col gap-3">
+                    <span class="material-symbols-outlined text-slate-400">account_balance</span>
+                    <div>
+                      <div class="text-sm font-bold">External Method</div>
+                      <div class="text-xs text-slate-500">Not available (internal only)</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Summary -->
+          <div class="w-full md:w-80 shrink-0">
+            <div class="bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 p-6 sticky top-24">
+              <h3 class="font-bold text-slate-900 dark:text-white mb-6">Payment Summary</h3>
+
+              <div class="space-y-4 mb-6">
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">Subtotal</span>
+                  <span id="subtotalAmount" class="font-medium">₱ 0.00</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">Service Fee</span>
+                  <span class="font-medium text-emerald-600">FREE</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">Tax</span>
+                  <span class="font-medium">₱ 0.00</span>
+                </div>
+              </div>
+
+              <div class="pt-6 border-t border-slate-100 dark:border-slate-800 mb-6">
+                <div class="flex justify-between items-end mb-1">
+                  <span class="text-xs font-bold text-slate-500 uppercase">Total Amount</span>
+                  <span id="totalAmount" class="text-2xl font-black text-blue-600 tracking-tight">₱ 0.00</span>
+                </div>
+                <p class="text-[10px] text-slate-400 leading-tight">
+                  By clicking Complete Payment, the system will verify your balance and process the payment internally.
+                </p>
+              </div>
+
+              <button
+                id="payBtn"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-md shadow-blue-200 dark:shadow-none flex items-center justify-center gap-2 group"
+              >
+                <span>Complete Payment</span>
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </button>
+
+              <div class="mt-6 flex items-center justify-center gap-2 text-xs text-slate-400">
+                <span class="material-symbols-outlined text-sm">verified_user</span>
+                Stored in transaction history & receipt
+              </div>
+            </div>
+
+            <div class="mt-4 p-4 rounded-lg bg-slate-100 dark:bg-slate-800 border-l-4 border-blue-500">
+              <div class="flex gap-2">
+                <span class="material-symbols-outlined text-blue-500 text-sm">info</span>
+                <p class="text-xs text-slate-600 dark:text-slate-400 italic">
+                  This transaction is logged. A digital receipt will be generated upon success.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Nav -->
+    <nav
+      class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 px-6 py-3 flex justify-between items-center z-50 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] border-t border-slate-100 dark:border-slate-800"
+    >
+      <a class="flex flex-col items-center gap-1 text-slate-400" href="/dashboard.html">
+        <span class="material-symbols-outlined">home</span>
+        <span class="text-[10px] font-medium">Home</span>
+      </a>
+      <a class="flex flex-col items-center gap-1 text-slate-400" href="/items.html">
+        <span class="material-symbols-outlined">inventory_2</span>
+        <span class="text-[10px] font-medium">Items</span>
+      </a>
+      <a class="flex flex-col items-center gap-1 text-blue-600" href="/checkout.html">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">shopping_cart</span>
+        <span class="text-[10px] font-bold">Checkout</span>
+      </a>
+      <a class="flex flex-col items-center gap-1 text-slate-400" href="/history.html">
+        <span class="material-symbols-outlined">history</span>
+        <span class="text-[10px] font-medium">History</span>
+      </a>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="/js/api.js"></script>
+    <script src="/js/checkout.js"></script>
+  </body>
+</html>

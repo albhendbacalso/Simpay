@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SimPay | Login</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#e6e8ea",
+              "surface-container-low": "#f2f4f6",
+              "surface-container-lowest": "#ffffff",
+              "on-surface-variant": "#434655",
+              error: "#ba1a1a",
+              "outline-variant": "#c3c6d7",
+              outline: "#737686",
+              "surface-tint": "#0053db",
+              "inverse-surface": "#2d3133",
+              "on-primary": "#ffffff",
+              "surface-dim": "#d8dadc",
+              "surface-container-highest": "#e0e3e5",
+              surface: "#f7f9fb",
+              "on-error": "#ffffff",
+              "on-background": "#191c1e",
+              "on-surface": "#191c1e",
+              background: "#f7f9fb",
+              "surface-bright": "#f7f9fb",
+              "primary-container": "#2563eb",
+              primary: "#004ac6",
+              "on-primary-fixed": "#00174b",
+              "primary-fixed": "#dbe1ff"
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px"
+            },
+            fontFamily: {
+              headline: ["Inter"],
+              body: ["Inter"],
+              label: ["Inter"]
+            }
+          }
+        }
+      };
+    </script>
+
+    <style>
+      body { font-family: "Inter", sans-serif; }
+      .signature-gradient { background: linear-gradient(135deg, #004ac6 0%, #2563eb 100%); }
+      .tabular-nums { font-variant-numeric: tabular-nums; }
+    </style>
+  </head>
+
+  <body class="bg-background text-on-background min-h-screen flex items-center justify-center p-6">
+    <div class="w-full max-w-[1440px] grid grid-cols-1 lg:grid-cols-12 gap-0 overflow-hidden rounded-[2rem] shadow-[0_20px_60px_rgba(0,74,198,0.08)] bg-surface-container-lowest">
+
+      <!-- Brand Visual Side -->
+      <div class="hidden lg:flex lg:col-span-7 relative flex-col justify-between p-16 overflow-hidden bg-slate-900">
+        <img class="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-overlay"
+          alt="abstract digital network background"
+          src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1600&q=60" />
+
+        <div class="relative z-10">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 signature-gradient rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
+              <span class="material-symbols-outlined text-white text-2xl" style="font-variation-settings:'FILL' 1;">payments</span>
+            </div>
+            <span class="text-2xl font-extrabold tracking-tight text-white">SimPay</span>
+          </div>
+        </div>
+
+        <div class="relative z-10 max-w-md">
+          <h1 class="text-5xl font-extrabold text-white tracking-tighter leading-tight mb-6">
+            Secure Web-Based<br />Digital Payments
+          </h1>
+          <p class="text-slate-300 text-lg leading-relaxed">
+            Log in to manage your balance, cash in, send money, make payments, generate receipts, and view transaction history.
+          </p>
+        </div>
+
+        <div class="relative z-10 flex gap-12 flex-wrap">
+          <div>
+            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">SECURITY</p>
+            <p class="text-white text-sm">Password hashing (bcrypt)</p>
+          </div>
+          <div>
+            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">TRANSMISSION</p>
+            <p class="text-white text-sm">HTTPS supported</p>
+          </div>
+          <div>
+            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">RECORDS</p>
+            <p class="text-white text-sm">Receipts & History</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auth Form Side -->
+      <div class="col-span-1 lg:col-span-5 flex flex-col p-8 md:p-16 lg:p-20 bg-surface-container-lowest">
+        <div class="mb-10">
+          <div class="lg:hidden flex items-center gap-3 mb-8">
+            <span class="text-xl font-extrabold tracking-tight text-primary">SimPay</span>
+          </div>
+          <h2 class="text-3xl font-extrabold tracking-tight text-on-surface mb-2">Log In</h2>
+          <p class="text-outline text-sm">Enter your email and password to access SimPay.</p>
+        </div>
+
+        <!-- message area -->
+        <div id="msg" class="hidden mb-6 text-sm font-medium rounded-xl p-3"></div>
+
+        <form id="loginForm" class="space-y-6">
+          <!-- Email Field -->
+          <div class="space-y-2">
+            <label class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant ml-1" for="email">Email</label>
+            <div class="relative group">
+              <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-outline group-focus-within:text-primary transition-colors">
+                <span class="material-symbols-outlined text-[20px]">mail</span>
+              </div>
+              <input
+                class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-2xl text-on-surface placeholder:text-outline/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm font-medium"
+                id="email" name="email" placeholder="name@example.com" type="email" autocomplete="email" required />
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="space-y-2">
+            <label class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant ml-1" for="password">Password</label>
+            <div class="relative group">
+              <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-outline group-focus-within:text-primary transition-colors">
+                <span class="material-symbols-outlined text-[20px]">lock</span>
+              </div>
+              <input
+                class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-2xl text-on-surface placeholder:text-outline/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm font-medium"
+                id="password" name="password" placeholder="••••••••" type="password" autocomplete="current-password" required />
+              <button id="togglePw" class="absolute inset-y-0 right-4 flex items-center text-outline hover:text-on-surface transition-colors" type="button">
+                <span class="material-symbols-outlined text-[20px]">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="pt-4">
+            <button id="loginBtn" class="w-full signature-gradient text-white font-bold py-4 rounded-full shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 active:scale-[0.98] transition-all duration-300" type="submit">
+              Log In
+            </button>
+          </div>
+        </form>
+
+        <div class="mt-8 pt-8 border-t border-surface-container-high flex flex-col items-center">
+          <p class="text-sm text-outline mb-6">
+            New to SimPay?
+            <a class="text-primary font-bold hover:underline" href="/register.html">Create an account</a>
+          </p>
+
+          <div class="flex items-center gap-3 px-5 py-2.5 bg-surface-container-low rounded-full border border-outline-variant/30">
+            <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings:'FILL' 1;">verified_user</span>
+            <span class="text-[11px] font-extrabold uppercase tracking-widest text-on-surface-variant">
+              Secure Login • Password hashing (bcrypt) • HTTPS supported
+            </span>
+          </div>
+        </div>
+
+        <div class="mt-auto pt-8 flex justify-center gap-6 text-[10px] font-bold uppercase tracking-[0.15em] text-outline/60">
+          <span class="cursor-pointer hover:text-primary transition-colors">Privacy</span>
+          <span class="cursor-pointer hover:text-primary transition-colors">Terms</span>
+          <span class="cursor-default">SRS v1.1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- scripts -->
+    <script src="/js/api.js"></script>
+    <script src="/js/auth-login.js"></script>
+  </body>
+</html>
